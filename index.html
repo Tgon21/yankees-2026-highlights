@@ -93,15 +93,17 @@ h1 .yr{color:transparent;-webkit-text-stroke:2px var(--navy)}
 .sortbtn:hover{background:var(--navy);color:#fff}
 .sortbtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 .months{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
-.months a{
+.months button{
   font-family:"Big Shoulders",sans-serif;font-weight:700;font-size:14px;
-  letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
-  padding:8px 11px;border-radius:6px;color:var(--gray);
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 11px;border:0;border-radius:6px;color:var(--gray);
+  background:transparent;cursor:pointer;
 }
-.months a:hover{background:var(--navy);color:#fff}
-.months a.oct{color:var(--bunting)}
-.months a.oct:hover{background:var(--bunting);color:#fff}
-.months a:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+.months button:hover{background:var(--navy);color:#fff}
+.months button.active{background:var(--navy);color:#fff}
+.months button.oct{color:var(--bunting)}
+.months button.oct:hover,.months button.oct.active{background:var(--bunting);color:#fff}
+.months button:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
 
 /* ── Month sections ── */
 .month-sec{padding-top:44px}
@@ -179,6 +181,25 @@ body.noscores .res+.ytlink{margin-left:auto}
 .ytlink{margin-left:auto;flex:0 0 auto;color:var(--gray);display:grid;place-items:center;border-radius:6px;padding:6px}
 .ytlink:hover{color:var(--bunting)}
 .ytlink:focus-visible{outline:2px solid var(--navy)}
+#season{scroll-margin-top:76px}
+.pager{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-top:30px;padding-top:18px;border-top:2px solid var(--stripe);
+}
+.pager .pgbtn{
+  font-family:"Big Shoulders",sans-serif;font-weight:700;font-size:15px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 18px;border:1.5px solid var(--navy);border-radius:8px;
+  background:#fff;color:var(--navy);cursor:pointer;
+}
+.pager .pgbtn:hover{background:var(--navy);color:#fff}
+.pager .pgbtn:disabled{opacity:.3;cursor:default}
+.pager .pgbtn:disabled:hover{background:#fff;color:var(--navy)}
+.pager .pgbtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.pager .where{
+  font-family:"Big Shoulders",sans-serif;font-weight:700;font-size:14px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gray);text-align:center;
+}
 .none{padding:70px 0;text-align:center;color:var(--gray);display:none}
 .none b{color:var(--navy)}
 
@@ -237,7 +258,7 @@ const GAMES=[{"id":"mKGFsK2pkLE","date":"2026-03-25","opp":"Giants","homeGame":f
 const MONTHS=["","Jan","Feb","March","April","May","June","July","August","September","October","Nov","Dec"];
 const MABBR=["","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 const DOW=["SUN","MON","TUE","WED","THU","FRI","SAT"];
-let asc=false, query="";
+let asc=false, query="", page=0;
 
 const season=document.getElementById("season");
 const monthnav=document.getElementById("monthnav");
@@ -280,21 +301,40 @@ function render(){
     if(!byMonth.has(m))byMonth.set(m,[]);
     byMonth.get(m).push(g);
   }
+  const months=[...byMonth.keys()];
+  if(page>=months.length)page=Math.max(0,months.length-1);
   let html="";
-  for(const [m,games] of byMonth){
-    const oct=m===10;
-    html+=`<section class="month-sec${oct?" october":""}" id="m${m}">
+  if(months.length){
+    const m=months[page], games=byMonth.get(m), oct=m===10;
+    html=`<section class="month-sec${oct?" october":""}" id="m${m}">
       <div class="month-head"><h2>${MONTHS[m]}${oct?" — Postseason &amp; the stretch":""}</h2><div class="rule"></div><span class="count">${games.length} game${games.length>1?"s":""}</span></div>
       <div class="grid">${games.map(card).join("")}</div>
+      <nav class="pager" aria-label="Months">
+        <button class="pgbtn" data-go="${page-1}" ${page===0?"disabled":""}>&larr; ${page>0?MONTHS[months[page-1]]:""}</button>
+        <span class="where">${MONTHS[m]} &middot; page ${page+1} of ${months.length}</span>
+        <button class="pgbtn" data-go="${page+1}" ${page===months.length-1?"disabled":""}>${page<months.length-1?MONTHS[months[page+1]]:""} &rarr;</button>
+      </nav>
     </section>`;
   }
   season.innerHTML=html;
   noneEl.style.display=shown.length?"none":"block";
   document.getElementById("noneq").textContent=`“${query}”`;
-  monthnav.innerHTML=[...byMonth.keys()].map(m=>`<a href="#m${m}"${m===10?' class="oct"':''}>${MABBR[m]}</a>`).join("");
+  monthnav.innerHTML=months.map((m,i)=>`<button data-go="${i}"${i===page?' aria-current="page"':''} class="${m===10?"oct ":""}${i===page?"active":""}">${MABBR[m]}</button>`).join("");
 }
 
+function goTo(i){
+  page=i;
+  render();
+  document.getElementById("season").scrollIntoView();
+}
+monthnav.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-go]");
+  if(b)goTo(Number(b.dataset.go));
+});
+
 season.addEventListener("click",e=>{
+  const pg=e.target.closest(".pgbtn[data-go]");
+  if(pg&&!pg.disabled){goTo(Number(pg.dataset.go));return}
   const btn=e.target.closest(".thumb");
   if(!btn)return;
   const f=document.createElement("iframe");
@@ -308,9 +348,10 @@ season.addEventListener("click",e=>{
 document.getElementById("sortbtn").addEventListener("click",e=>{
   asc=!asc;
   e.currentTarget.textContent=asc?"Sorted: oldest first":"Sorted: newest first";
+  page=0;
   render();
 });
-document.getElementById("search").addEventListener("input",e=>{query=e.target.value;render()});
+document.getElementById("search").addEventListener("input",e=>{query=e.target.value;page=0;render()});
 
 document.getElementById("scorebtn").addEventListener("click",e=>{
   const off=document.body.classList.toggle("noscores");
