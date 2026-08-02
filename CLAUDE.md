@@ -44,8 +44,10 @@ All data is baked into `index.html` as JS consts (no runtime fetching):
    Count completed games (`status.detailedState == "Final"`); this is the target
    number GAMES must match. `gameNumber` disambiguates doubleheaders.
 
-2. **Find highlight videos.** yt-dlp is bot-blocked on this server; use curl with a
-   browser User-Agent and parse `ytInitialData` JSON out of the HTML:
+2. **Find highlight videos.** Try `yt-dlp --flat-playlist` first if it's available
+   and not bot-blocked (it was blocked on the original build server). Fallback that
+   always works: curl with a browser User-Agent and parse the `ytInitialData` JSON
+   out of the page HTML:
    - Primary: playlist `PLDN7hDtp_5qdCVzt4AXqUwiIdCdWFykBK`
      ("2026 New York Yankees Full Game Highlights") — lags ~2 weeks behind.
    - Gap fill: YouTube search sorted by date
@@ -77,8 +79,8 @@ All data is baked into `index.html` as JS consts (no runtime fetching):
    stat strip (games, first/latest, record) computes itself from GAMES.
 
 7. **QA + deploy.** Check HTML tag balance and `node --check` the inline script,
-   then `git add -A && git commit && git push` (git identity is configured locally
-   in this repo; commits as Tgon21). Pages auto-rebuilds in ~1 min; confirm with
+   then `git add -A && git commit && git push`. Pages auto-rebuilds in ~1 min;
+   confirm with
    `gh api repos/Tgon21/yankees-2026-highlights/pages/builds/latest --jq .status`
    until it reports `built`.
 
