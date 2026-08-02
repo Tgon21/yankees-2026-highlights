@@ -65,7 +65,7 @@ h1 .yr{color:transparent;-webkit-text-stroke:2px var(--navy)}
   font-family:"Big Shoulders",sans-serif;font-weight:700;font-size:14px;
   letter-spacing:.14em;text-transform:uppercase;
 }
-.record b{font-size:22px;font-weight:800;letter-spacing:.02em;display:block;line-height:1}
+.record b{font-size:22px;font-weight:800;letter-spacing:.02em;display:block;line-height:1;white-space:nowrap}
 .record span{text-align:center}
 .record small{font-size:10px;font-weight:500;letter-spacing:.22em;opacity:.75}
 
@@ -147,6 +147,7 @@ h1 .yr{color:transparent;-webkit-text-stroke:2px var(--navy)}
 .thumb:hover .play svg{transform:scale(1.12)}
 .thumb:focus-visible{outline:3px solid var(--bunting);outline-offset:-3px}
 .game iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+.game.playing{grid-column:1/-1;scroll-margin-top:86px}
 .meta{display:flex;align-items:center;gap:14px;padding:12px 14px}
 .datebox{
   flex:0 0 auto;width:58px;text-align:center;
@@ -260,6 +261,7 @@ footer .dim{opacity:.65;max-width:520px;margin:6px auto 0}
   header{padding-top:38px}
   .months{margin-left:0}
   .grid{grid-template-columns:1fr}
+  .record{display:grid;grid-template-columns:1fr 1fr;gap:16px 12px;padding:14px 20px}
 }
 </style>
 </head>
@@ -405,7 +407,9 @@ season.addEventListener("click",e=>{
   f.title=btn.getAttribute("aria-label");
   f.allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
   f.allowFullscreen=true;
+  const card=btn.closest(".game");
   btn.replaceWith(f);
+  if(card){card.classList.add("playing");card.scrollIntoView({behavior:"smooth",block:"start"})}
 });
 
 document.getElementById("sortbtn").addEventListener("click",e=>{
