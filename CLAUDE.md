@@ -36,6 +36,14 @@ All data is baked into `index.html` as JS consts (no runtime fetching):
   - `rh` recap headline · `rs` recap slug → `mlb.com/news/{rs}`
 - `const STAND=[...]` — AL East rows `{team, w, l, pct, gb, streak, l10}`
 - `const PLAYERS={hit:[...], pit:[...]}` — batting/pitching tables
+- `const SCHED=[...]` — remaining (unplayed) games `{date, opp, home, t, dh}`:
+  `t` is first pitch in **Eastern time** (convert from the schedule API's UTC
+  `gameDate` via America/New_York), `dh` doubleheader game number or null.
+  Rebuild from the same schedule call: keep games whose `detailedState` is not
+  "Final" and not "Postponed" (postponed originals are dropped — their makeup
+  dates appear as separate Scheduled entries). Played games must be REMOVED
+  from SCHED when they're added to GAMES. The "games left" count label renders
+  itself from SCHED.length.
 
 ## How to refresh (new games / updated standings & stats)
 
