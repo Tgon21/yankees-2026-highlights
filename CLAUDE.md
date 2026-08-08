@@ -79,6 +79,11 @@ All data is baked into `index.html` as JS consts (no runtime fetching):
    players appear once per team stint plus a combined row — dedupe by name keeping
    the row with max PA (hitters) / max IP (pitchers); drop position players from the
    pitching list (`pos != "P"`); apply minimums (≈40 PA, ≈15 IP); sort desc by PA/IP.
+   **Exception — new faces:** anyone who debuted or was called up recently and is
+   appearing in the lineup gets included even if under the minimums (e.g. George
+   Lombard Jr., added after his Aug 4 debut). Compare the roster response against
+   the current PLAYERS tables each refresh; if someone new has played, add them
+   rather than letting the minimums silently drop them.
 
 6. **Verify before publishing.** Every GAMES date must exist in the schedule and
    vice versa; per-date video count must match per-date game count (doubleheaders);
