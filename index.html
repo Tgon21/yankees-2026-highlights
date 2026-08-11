@@ -204,6 +204,15 @@ body.noscores .res+.ytlink{margin-left:auto}
 .recap .boxlink:hover{color:var(--bunting)}
 body.noscores .recap{display:none}
 
+/* ── Talkin' Yanks ── */
+#talkin .secsub{color:var(--gray);font-size:14px;max-width:640px;margin:-4px 0 18px}
+#talkin .secsub a{color:var(--navy);font-weight:600}
+.ep .eptitle{font-weight:700;font-size:15px;line-height:1.35}
+.ep .epmask{display:none;font-size:14px;font-style:italic;color:var(--gray)}
+body.noscores .ep .eptitle{display:none}
+body.noscores .ep .epmask{display:block}
+.morebar{display:flex;justify-content:center;margin-top:22px}
+
 /* ── Standings & stats ── */
 .extra{padding-top:52px;scroll-margin-top:76px}
 .extra h3{
@@ -277,7 +286,7 @@ footer .dim{opacity:.65;max-width:520px;margin:6px auto 0}
 <header class="wrap">
   <p class="eyebrow">Opening Day to today</p>
   <h1>Yankees <span class="yr">2026</span></h1>
-  <p class="sub">Every official game highlight of the <strong>2026 New York Yankees</strong> season so far, in one place and sorted by date — every game and final score verified against <strong>MLB’s official Stats API</strong>, doubleheaders included. Videos stream straight from <strong>MLB’s YouTube channel</strong>; each card links to the official recap and box score, with AL East standings and player stats at the bottom of the page. Catching up? Hit “Hide scores” and results and recaps stay hidden until you press play.</p>
+  <p class="sub">Every official game highlight of the <strong>2026 New York Yankees</strong> season so far, in one place and sorted by date — every game and final score verified against <strong>MLB’s official Stats API</strong>, doubleheaders included. Videos stream straight from <strong>MLB’s YouTube channel</strong>; each card links to the official recap and box score, with AL East standings and player stats at the bottom of the page. New this year: every 2026 episode of <strong>Talkin’ Yanks</strong> by Jomboy Media, right below the games. Catching up? Hit “Hide scores” and results, recaps and episode titles stay hidden until you press play.</p>
   <div class="record" aria-label="Season summary">
     <span><b id="st-games">—</b><small>Games</small></span>
     <span><b id="st-first">—</b><small>First pitch</small></span>
@@ -292,6 +301,7 @@ footer .dim{opacity:.65;max-width:520px;margin:6px auto 0}
     <button id="sortbtn" class="sortbtn" aria-live="polite">Sorted: newest first</button>
     <button id="scorebtn" class="sortbtn" aria-live="polite" aria-pressed="false">Hide scores</button>
     <div class="months" id="monthnav"></div>
+    <a class="jump" href="#talkin">Talkin&rsquo; Yanks</a>
     <a class="jump" href="#schedule">Schedule</a>
     <a class="jump" href="#standings">Standings</a>
     <a class="jump" href="#stats">Stats</a>
@@ -301,18 +311,25 @@ footer .dim{opacity:.65;max-width:520px;margin:6px auto 0}
 <main class="wrap" id="season"></main>
 <p class="none wrap" id="none">No games match <b id="noneq"></b>. Clear the filter to see the full season.</p>
 
+<section class="wrap extra" id="talkin">
+  <div class="month-head"><h2>Talkin&rsquo; Yanks</h2><div class="rule"></div><span class="count" id="ty-count"></span></div>
+  <p class="secsub">The season in podcast form — every 2026 episode of <a href="https://www.youtube.com/@TalkinYanks" target="_blank" rel="noopener">Talkin&rsquo; Yanks</a> by Jomboy Media, streamed straight from the official channel. &ldquo;Hide scores&rdquo; hides episode titles too, since they can give away results.</p>
+  <div class="grid" id="tygrid"></div>
+  <div class="morebar"><button class="pgbtn" id="tymore"></button></div>
+</section>
+
 <section class="wrap extra" id="schedule">
   <div class="month-head"><h2>Remaining schedule</h2><div class="rule"></div><span class="count" id="sched-count"></span></div>
   <div id="schedwrap"></div>
 </section>
 
 <section class="wrap extra" id="standings">
-  <div class="month-head"><h2>AL East standings</h2><div class="rule"></div><span class="count">Through Aug 7</span></div>
+  <div class="month-head"><h2>AL East standings</h2><div class="rule"></div><span class="count">Through Aug 10</span></div>
   <div class="tblwrap" id="standtbl"></div>
 </section>
 
 <section class="wrap extra" id="stats">
-  <div class="month-head"><h2>Player stats</h2><div class="rule"></div><span class="count">Active roster · Through Aug 7</span></div>
+  <div class="month-head"><h2>Player stats</h2><div class="rule"></div><span class="count">Active roster · Through Aug 9</span></div>
   <h3>Batting</h3>
   <div class="tblwrap" id="battbl"></div>
   <h3>Pitching</h3>
@@ -321,7 +338,7 @@ footer .dim{opacity:.65;max-width:520px;margin:6px auto 0}
 
 <footer>
   <div class="nyf">Yankees 2026 · The Season So Far</div>
-  <p>A fan-made index. All videos © MLB, embedded from the official <a href="https://www.youtube.com/@MLB" rel="noopener">MLB YouTube channel</a>.</p>
+  <p>A fan-made index. Game highlights © MLB, embedded from the official <a href="https://www.youtube.com/@MLB" rel="noopener">MLB YouTube channel</a>. Talkin&rsquo; Yanks episodes © Jomboy Media, embedded from the official <a href="https://www.youtube.com/@TalkinYanks" rel="noopener">Talkin&rsquo; Yanks channel</a>.</p>
   <p class="dim">This site is not affiliated with the New York Yankees or Major League Baseball. Each player loads only when you click it, courtesy of youtube-nocookie.com.</p>
 </footer>
 
@@ -330,7 +347,9 @@ const GAMES=[{"id":"mKGFsK2pkLE","date":"2026-03-25","opp":"Giants","homeGame":f
 {"id": "5Z1vb4mLYIw", "date": "2026-08-03", "opp": "Cardinals", "homeGame": true, "post": null, "dh": null, "ys": 7, "os": 13, "w": false, "pk": 823520, "rh": "Still a Cardinal after Deadline, Burleson rewards club with 3-HR game", "rs": "alec-burleson-has-first-three-homer-game-of-career"},
 {"id": "DegVMF3aNB8", "date": "2026-08-04", "opp": "Cardinals", "homeGame": true, "post": null, "dh": null, "ys": 2, "os": 0, "w": true, "pk": 823517, "rh": "Lombard homers for 1st hit, shines on 'D' in debut he -- and Yanks -- won't forget", "rs": "george-lombard-jr-homers-for-first-career-hit-in-debut"},
 {"id": "FBGIRXgtggc", "date": "2026-08-05", "opp": "Cardinals", "homeGame": true, "post": null, "dh": null, "ys": 1, "os": 3, "w": false, "pk": 823516, "rh": "Cards hang tough behind Pallante, key challenge to nab gritty series in Bronx", "rs": "andre-pallante-leads-cardinals-to-win-over-yankees"},
-{"id": "vdeqqs2C4xI", "date": "2026-08-07", "opp": "Braves", "homeGame": true, "post": null, "dh": null, "ys": 3, "os": 2, "w": true, "pk": 823515, "rh": "In test of playoff-type baseball, Yanks show their mettle with comeback win", "rs": "ryan-mcmahon-s-sacrifice-fly-lifts-yankees-in-10"}];
+{"id": "vdeqqs2C4xI", "date": "2026-08-07", "opp": "Braves", "homeGame": true, "post": null, "dh": null, "ys": 3, "os": 2, "w": true, "pk": 823515, "rh": "In test of playoff-type baseball, Yanks show their mettle with comeback win", "rs": "ryan-mcmahon-s-sacrifice-fly-lifts-yankees-in-10"},
+{"id": "8TAV8qknhOI", "date": "2026-08-08", "opp": "Braves", "homeGame": true, "post": null, "dh": null, "ys": 5, "os": 4, "w": true, "pk": 823514, "rh": "Yanks' past, present, future coincide as Cole hits milestone -- and kids steal show", "rs": "gerrit-cole-picks-up-1-000th-strikeout-as-a-yankee"},
+{"id": "T7jSc-E2lWE", "date": "2026-08-09", "opp": "Braves", "homeGame": true, "post": null, "dh": null, "ys": 1, "os": 2, "w": false, "pk": 823513, "rh": "Holmes' second straight scoreless start sets up Braves' 10-inning win in Bronx", "rs": "grant-holmes-pitches-6-scoreless-innings-in-win-over-yankees"}];
 const MONTHS=["","Jan","Feb","March","April","May","June","July","August","September","October","Nov","Dec"];
 const MABBR=["","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 const DOW=["SUN","MON","TUE","WED","THU","FRI","SAT"];
@@ -340,10 +359,12 @@ const season=document.getElementById("season");
 const monthnav=document.getElementById("monthnav");
 const noneEl=document.getElementById("none");
 
-const STAND=[{"team": "Rays", "w": 69, "l": 46, "pct": ".600", "gb": "-", "streak": "W4", "l10": "7-3"}, {"team": "Yankees", "w": 65, "l": 51, "pct": ".560", "gb": "4.5", "streak": "W1", "l10": "5-5"}, {"team": "Red Sox", "w": 64, "l": 51, "pct": ".557", "gb": "5.0", "streak": "W9", "l10": "9-1"}, {"team": "Orioles", "w": 56, "l": 60, "pct": ".483", "gb": "13.5", "streak": "L2", "l10": "5-5"}, {"team": "Blue Jays", "w": 55, "l": 62, "pct": ".470", "gb": "15.0", "streak": "W1", "l10": "6-4"}];
-const PLAYERS={"hit": [{"name": "Ben Rice", "pos": "1B", "g": 112, "pa": 476, "avg": ".259", "hr": 31, "rbi": 74, "sb": 2, "obp": ".353", "slg": ".545", "ops": ".898"}, {"name": "Cody Bellinger", "pos": "LF", "g": 102, "pa": 434, "avg": ".259", "hr": 11, "rbi": 53, "sb": 10, "obp": ".350", "slg": ".420", "ops": ".770"}, {"name": "Jazz Chisholm Jr.", "pos": "2B", "g": 108, "pa": 427, "avg": ".215", "hr": 17, "rbi": 47, "sb": 30, "obp": ".293", "slg": ".396", "ops": ".689"}, {"name": "Luis García Jr.", "pos": "1B", "g": 108, "pa": 391, "avg": ".282", "hr": 24, "rbi": 78, "sb": 4, "obp": ".315", "slg": ".556", "ops": ".871"}, {"name": "Trent Grisham", "pos": "CF", "g": 96, "pa": 382, "avg": ".209", "hr": 12, "rbi": 43, "sb": 7, "obp": ".307", "slg": ".376", "ops": ".683"}, {"name": "José Caballero", "pos": "SS", "g": 99, "pa": 349, "avg": ".245", "hr": 12, "rbi": 41, "sb": 27, "obp": ".297", "slg": ".395", "ops": ".692"}, {"name": "Paul Goldschmidt", "pos": "1B", "g": 87, "pa": 325, "avg": ".248", "hr": 16, "rbi": 44, "sb": 1, "obp": ".308", "slg": ".453", "ops": ".761"}, {"name": "Heliot Ramos", "pos": "LF", "g": 78, "pa": 320, "avg": ".262", "hr": 9, "rbi": 34, "sb": 3, "obp": ".309", "slg": ".423", "ops": ".732"}, {"name": "Ryan McMahon", "pos": "3B", "g": 96, "pa": 278, "avg": ".217", "hr": 10, "rbi": 28, "sb": 3, "obp": ".282", "slg": ".379", "ops": ".661"}, {"name": "Austin Wells", "pos": "C", "g": 82, "pa": 262, "avg": ".170", "hr": 8, "rbi": 17, "sb": 1, "obp": ".268", "slg": ".293", "ops": ".561"}, {"name": "Aaron Judge", "pos": "RF", "g": 59, "pa": 261, "avg": ".248", "hr": 17, "rbi": 38, "sb": 5, "obp": ".375", "slg": ".533", "ops": ".908"}, {"name": "Jasson Domínguez", "pos": "RF", "g": 53, "pa": 212, "avg": ".230", "hr": 6, "rbi": 14, "sb": 7, "obp": ".270", "slg": ".380", "ops": ".650"}, {"name": "Amed Rosario", "pos": "3B", "g": 68, "pa": 194, "avg": ".235", "hr": 10, "rbi": 28, "sb": 1, "obp": ".278", "slg": ".441", "ops": ".719"}, {"name": "Anthony Volpe", "pos": "SS", "g": 56, "pa": 194, "avg": ".240", "hr": 1, "rbi": 19, "sb": 7, "obp": ".325", "slg": ".322", "ops": ".647"}, {"name": "Randal Grichuk", "pos": "LF", "g": 78, "pa": 177, "avg": ".262", "hr": 9, "rbi": 24, "sb": 0, "obp": ".294", "slg": ".512", "ops": ".806"}, {"name": "Spencer Jones", "pos": "CF", "g": 44, "pa": 125, "avg": ".205", "hr": 5, "rbi": 13, "sb": 3, "obp": ".288", "slg": ".375", "ops": ".663"}, {"name": "Giancarlo Stanton", "pos": "DH", "g": 24, "pa": 96, "avg": ".256", "hr": 3, "rbi": 14, "sb": 1, "obp": ".302", "slg": ".422", "ops": ".724"}, {"name": "J.C. Escarra", "pos": "C", "g": 32, "pa": 92, "avg": ".188", "hr": 0, "rbi": 7, "sb": 0, "obp": ".239", "slg": ".271", "ops": ".510"}, {"name": "Max Schuemann", "pos": "LF", "g": 41, "pa": 87, "avg": ".194", "hr": 2, "rbi": 8, "sb": 3, "obp": ".333", "slg": ".361", "ops": ".694"}, {"name": "Ali Sánchez", "pos": "C", "g": 32, "pa": 60, "avg": ".268", "hr": 1, "rbi": 7, "sb": 0, "obp": ".300", "slg": ".357", "ops": ".657"}, {"name": "George Lombard Jr.", "pos": "SS", "g": 4, "pa": 12, "avg": ".300", "hr": 1, "rbi": 1, "sb": 0, "obp": ".417", "slg": ".600", "ops": "1.017"}], "pit": [{"name": "Cam Schlittler", "pos": "P", "g": 24, "w": 10, "l": 6, "era": "2.26", "ip": "139.2", "so": 171, "sv": 0, "whip": "0.95"}, {"name": "Ryan Weathers", "pos": "P", "g": 22, "w": 5, "l": 7, "era": "3.79", "ip": "121.0", "so": 132, "sv": 0, "whip": "1.22"}, {"name": "Will Warren", "pos": "P", "g": 23, "w": 8, "l": 6, "era": "4.18", "ip": "114.0", "so": 114, "sv": 0, "whip": "1.37"}, {"name": "Max Fried", "pos": "P", "g": 14, "w": 4, "l": 3, "era": "2.88", "ip": "81.1", "so": 75, "sv": 0, "whip": "0.97"}, {"name": "Gerrit Cole", "pos": "P", "g": 14, "w": 5, "l": 5, "era": "3.36", "ip": "75.0", "so": 79, "sv": 0, "whip": "1.08"}, {"name": "Paul Blackburn", "pos": "P", "g": 41, "w": 3, "l": 1, "era": "2.02", "ip": "62.1", "so": 50, "sv": 1, "whip": "1.06"}, {"name": "Brent Headrick", "pos": "P", "g": 59, "w": 6, "l": 1, "era": "1.38", "ip": "58.2", "so": 71, "sv": 0, "whip": "1.13"}, {"name": "David Bednar", "pos": "P", "g": 47, "w": 5, "l": 3, "era": "2.49", "ip": "50.2", "so": 57, "sv": 25, "whip": "1.03"}, {"name": "Fernando Cruz", "pos": "P", "g": 55, "w": 4, "l": 6, "era": "2.88", "ip": "50.0", "so": 62, "sv": 2, "whip": "1.32"}, {"name": "Carlos Rodón", "pos": "P", "g": 9, "w": 4, "l": 2, "era": "3.30", "ip": "46.1", "so": 52, "sv": 0, "whip": "1.25"}, {"name": "Ryan Yarbrough", "pos": "P", "g": 28, "w": 2, "l": 1, "era": "3.68", "ip": "44.0", "so": 30, "sv": 2, "whip": "1.27"}, {"name": "Tim Hill", "pos": "P", "g": 52, "w": 3, "l": 2, "era": "4.53", "ip": "43.2", "so": 20, "sv": 1, "whip": "1.17"}, {"name": "Camilo Doval", "pos": "P", "g": 47, "w": 3, "l": 1, "era": "4.43", "ip": "42.2", "so": 41, "sv": 1, "whip": "1.36"}, {"name": "Jake Bird", "pos": "P", "g": 36, "w": 1, "l": 1, "era": "5.93", "ip": "30.1", "so": 31, "sv": 0, "whip": "1.55"}, {"name": "Luis Gil", "pos": "P", "g": 4, "w": 1, "l": 2, "era": "6.05", "ip": "19.1", "so": 9, "sv": 0, "whip": "1.34"}, {"name": "Elmer Rodríguez", "pos": "P", "g": 4, "w": 0, "l": 2, "era": "4.76", "ip": "17.0", "so": 10, "sv": 0, "whip": "1.76"}, {"name": "Angel Chivilli", "pos": "P", "g": 15, "w": 1, "l": 1, "era": "3.78", "ip": "16.2", "so": 16, "sv": 0, "whip": "1.26"}]};
+const STAND=[{"team": "Rays", "w": 72, "l": 46, "pct": ".610", "gb": "-", "streak": "W7", "l10": "8-2"}, {"team": "Yankees", "w": 66, "l": 52, "pct": ".559", "gb": "6.0", "streak": "L1", "l10": "5-5"}, {"team": "Red Sox", "w": 64, "l": 54, "pct": ".542", "gb": "8.0", "streak": "L3", "l10": "7-3"}, {"team": "Orioles", "w": 57, "l": 62, "pct": ".479", "gb": "15.5", "streak": "L1", "l10": "4-6"}, {"team": "Blue Jays", "w": 57, "l": 63, "pct": ".475", "gb": "16.0", "streak": "W1", "l10": "6-4"}];
+const PLAYERS={"hit": [{"name": "Ben Rice", "pos": "1B", "g": 113, "pa": 483, "avg": ".257", "hr": 32, "rbi": 75, "sb": 2, "obp": ".350", "slg": ".545", "ops": ".895"}, {"name": "Cody Bellinger", "pos": "LF", "g": 102, "pa": 434, "avg": ".259", "hr": 11, "rbi": 53, "sb": 10, "obp": ".350", "slg": ".420", "ops": ".770"}, {"name": "Jazz Chisholm Jr.", "pos": "2B", "g": 109, "pa": 431, "avg": ".216", "hr": 17, "rbi": 47, "sb": 30, "obp": ".295", "slg": ".396", "ops": ".691"}, {"name": "Luis Garc\u00eda Jr.", "pos": "1B", "g": 109, "pa": 395, "avg": ".279", "hr": 24, "rbi": 78, "sb": 4, "obp": ".311", "slg": ".551", "ops": ".862"}, {"name": "Trent Grisham", "pos": "CF", "g": 98, "pa": 390, "avg": ".213", "hr": 13, "rbi": 44, "sb": 7, "obp": ".308", "slg": ".391", "ops": ".699"}, {"name": "Jos\u00e9 Caballero", "pos": "SS", "g": 100, "pa": 353, "avg": ".242", "hr": 12, "rbi": 41, "sb": 28, "obp": ".296", "slg": ".391", "ops": ".687"}, {"name": "Paul Goldschmidt", "pos": "1B", "g": 87, "pa": 328, "avg": ".247", "hr": 16, "rbi": 44, "sb": 1, "obp": ".308", "slg": ".450", "ops": ".758"}, {"name": "Heliot Ramos", "pos": "LF", "g": 79, "pa": 327, "avg": ".256", "hr": 9, "rbi": 34, "sb": 3, "obp": ".303", "slg": ".413", "ops": ".716"}, {"name": "Ryan McMahon", "pos": "3B", "g": 98, "pa": 283, "avg": ".214", "hr": 10, "rbi": 28, "sb": 3, "obp": ".280", "slg": ".374", "ops": ".654"}, {"name": "Austin Wells", "pos": "C", "g": 83, "pa": 268, "avg": ".175", "hr": 8, "rbi": 17, "sb": 2, "obp": ".273", "slg": ".299", "ops": ".572"}, {"name": "Aaron Judge", "pos": "RF", "g": 59, "pa": 261, "avg": ".248", "hr": 17, "rbi": 38, "sb": 5, "obp": ".375", "slg": ".533", "ops": ".908"}, {"name": "Jasson Dom\u00ednguez", "pos": "RF", "g": 53, "pa": 212, "avg": ".230", "hr": 6, "rbi": 14, "sb": 7, "obp": ".270", "slg": ".380", "ops": ".650"}, {"name": "Amed Rosario", "pos": "3B", "g": 69, "pa": 197, "avg": ".231", "hr": 10, "rbi": 28, "sb": 1, "obp": ".274", "slg": ".434", "ops": ".708"}, {"name": "Anthony Volpe", "pos": "SS", "g": 56, "pa": 194, "avg": ".240", "hr": 1, "rbi": 19, "sb": 7, "obp": ".325", "slg": ".322", "ops": ".647"}, {"name": "Randal Grichuk", "pos": "LF", "g": 80, "pa": 181, "avg": ".262", "hr": 9, "rbi": 25, "sb": 0, "obp": ".293", "slg": ".512", "ops": ".805"}, {"name": "Spencer Jones", "pos": "CF", "g": 45, "pa": 133, "avg": ".212", "hr": 5, "rbi": 15, "sb": 4, "obp": ".301", "slg": ".390", "ops": ".691"}, {"name": "Giancarlo Stanton", "pos": "DH", "g": 24, "pa": 96, "avg": ".256", "hr": 3, "rbi": 14, "sb": 1, "obp": ".302", "slg": ".422", "ops": ".724"}, {"name": "J.C. Escarra", "pos": "C", "g": 32, "pa": 92, "avg": ".188", "hr": 0, "rbi": 7, "sb": 0, "obp": ".239", "slg": ".271", "ops": ".510"}, {"name": "Max Schuemann", "pos": "LF", "g": 41, "pa": 87, "avg": ".194", "hr": 2, "rbi": 8, "sb": 3, "obp": ".333", "slg": ".361", "ops": ".694"}, {"name": "Ali S\u00e1nchez", "pos": "C", "g": 32, "pa": 60, "avg": ".268", "hr": 1, "rbi": 7, "sb": 0, "obp": ".300", "slg": ".357", "ops": ".657"}, {"name": "George Lombard Jr.", "pos": "SS", "g": 5, "pa": 20, "avg": ".294", "hr": 2, "rbi": 2, "sb": 0, "obp": ".400", "slg": ".647", "ops": "1.047"}], "pit": [{"name": "Cam Schlittler", "pos": "P", "g": 25, "w": 10, "l": 6, "era": "2.21", "ip": "146.2", "so": 182, "sv": 0, "whip": "0.93"}, {"name": "Ryan Weathers", "pos": "P", "g": 22, "w": 5, "l": 7, "era": "3.79", "ip": "121.0", "so": 132, "sv": 0, "whip": "1.22"}, {"name": "Will Warren", "pos": "P", "g": 23, "w": 8, "l": 6, "era": "4.18", "ip": "114.0", "so": 114, "sv": 0, "whip": "1.37"}, {"name": "Max Fried", "pos": "P", "g": 14, "w": 4, "l": 3, "era": "2.88", "ip": "81.1", "so": 75, "sv": 0, "whip": "0.97"}, {"name": "Gerrit Cole", "pos": "P", "g": 14, "w": 6, "l": 5, "era": "3.35", "ip": "80.2", "so": 87, "sv": 0, "whip": "1.08"}, {"name": "Paul Blackburn", "pos": "P", "g": 43, "w": 3, "l": 2, "era": "1.95", "ip": "64.2", "so": 52, "sv": 1, "whip": "1.04"}, {"name": "Brent Headrick", "pos": "P", "g": 60, "w": 6, "l": 1, "era": "1.52", "ip": "59.1", "so": 71, "sv": 0, "whip": "1.15"}, {"name": "David Bednar", "pos": "P", "g": 48, "w": 5, "l": 3, "era": "2.61", "ip": "51.2", "so": 58, "sv": 26, "whip": "1.05"}, {"name": "Fernando Cruz", "pos": "P", "g": 55, "w": 4, "l": 6, "era": "2.88", "ip": "50.0", "so": 62, "sv": 2, "whip": "1.32"}, {"name": "Carlos Rod\u00f3n", "pos": "P", "g": 9, "w": 4, "l": 2, "era": "3.30", "ip": "46.1", "so": 52, "sv": 0, "whip": "1.25"}, {"name": "Ryan Yarbrough", "pos": "P", "g": 28, "w": 2, "l": 1, "era": "3.68", "ip": "44.0", "so": 30, "sv": 2, "whip": "1.27"}, {"name": "Camilo Doval", "pos": "P", "g": 48, "w": 3, "l": 1, "era": "4.33", "ip": "43.2", "so": 44, "sv": 1, "whip": "1.37"}, {"name": "Tim Hill", "pos": "P", "g": 52, "w": 3, "l": 2, "era": "4.53", "ip": "43.2", "so": 20, "sv": 1, "whip": "1.17"}, {"name": "Jake Bird", "pos": "P", "g": 37, "w": 1, "l": 1, "era": "5.74", "ip": "31.1", "so": 33, "sv": 0, "whip": "1.50"}, {"name": "Luis Gil", "pos": "P", "g": 4, "w": 1, "l": 2, "era": "6.05", "ip": "19.1", "so": 9, "sv": 0, "whip": "1.34"}, {"name": "Elmer Rodr\u00edguez", "pos": "P", "g": 4, "w": 0, "l": 2, "era": "4.76", "ip": "17.0", "so": 10, "sv": 0, "whip": "1.76"}, {"name": "Angel Chivilli", "pos": "P", "g": 15, "w": 1, "l": 1, "era": "3.78", "ip": "16.2", "so": 16, "sv": 0, "whip": "1.26"}]};
 
-const SCHED=[{date:"2026-08-08",opp:"Braves",home:true,t:"3:05 PM",dh:null},{date:"2026-08-09",opp:"Braves",home:true,t:"1:35 PM",dh:null},{date:"2026-08-11",opp:"Mariners",home:true,t:"7:05 PM",dh:null},{date:"2026-08-12",opp:"Mariners",home:true,t:"7:05 PM",dh:null},{date:"2026-08-13",opp:"Mariners",home:true,t:"1:35 PM",dh:null},{date:"2026-08-14",opp:"Blue Jays",home:false,t:"7:15 PM",dh:null},{date:"2026-08-15",opp:"Blue Jays",home:false,t:"3:07 PM",dh:null},{date:"2026-08-16",opp:"Blue Jays",home:false,t:"1:37 PM",dh:null},{date:"2026-08-18",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-19",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-20",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-21",opp:"Blue Jays",home:true,t:"7:05 PM",dh:null},{date:"2026-08-22",opp:"Blue Jays",home:true,t:"1:35 PM",dh:null},{date:"2026-08-23",opp:"Blue Jays",home:true,t:"1:35 PM",dh:null},{date:"2026-08-25",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-26",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-27",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-28",opp:"Red Sox",home:true,t:"7:15 PM",dh:null},{date:"2026-08-29",opp:"Red Sox",home:true,t:"1:05 PM",dh:1},{date:"2026-08-29",opp:"Red Sox",home:true,t:"7:15 PM",dh:2},{date:"2026-08-30",opp:"Red Sox",home:true,t:"1:35 PM",dh:null},{date:"2026-08-31",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-01",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-02",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-04",opp:"Padres",home:false,t:"9:40 PM",dh:null},{date:"2026-09-05",opp:"Padres",home:false,t:"7:15 PM",dh:null},{date:"2026-09-06",opp:"Padres",home:false,t:"4:10 PM",dh:null},{date:"2026-09-08",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-09",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-10",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-11",opp:"Mets",home:true,t:"7:05 PM",dh:null},{date:"2026-09-12",opp:"Mets",home:true,t:"1:35 PM",dh:null},{date:"2026-09-13",opp:"Mets",home:true,t:"1:35 PM",dh:null},{date:"2026-09-14",opp:"Twins",home:false,t:"7:40 PM",dh:null},{date:"2026-09-15",opp:"Twins",home:false,t:"7:40 PM",dh:null},{date:"2026-09-16",opp:"Twins",home:false,t:"1:40 PM",dh:null},{date:"2026-09-18",opp:"D-backs",home:false,t:"9:40 PM",dh:null},{date:"2026-09-19",opp:"D-backs",home:false,t:"8:10 PM",dh:null},{date:"2026-09-20",opp:"D-backs",home:false,t:"4:10 PM",dh:null},{date:"2026-09-22",opp:"Rays",home:true,t:"1:05 PM",dh:1},{date:"2026-09-22",opp:"Rays",home:true,t:"7:05 PM",dh:2},{date:"2026-09-23",opp:"Rays",home:true,t:"7:05 PM",dh:null},{date:"2026-09-24",opp:"Rays",home:true,t:"7:05 PM",dh:null},{date:"2026-09-25",opp:"Orioles",home:true,t:"7:05 PM",dh:null},{date:"2026-09-26",opp:"Orioles",home:true,t:"7:15 PM",dh:null},{date:"2026-09-27",opp:"Orioles",home:true,t:"3:20 PM",dh:null}];
+const SCHED=[{date:"2026-08-11",opp:"Mariners",home:true,t:"7:05 PM",dh:null},{date:"2026-08-12",opp:"Mariners",home:true,t:"7:05 PM",dh:null},{date:"2026-08-13",opp:"Mariners",home:true,t:"1:35 PM",dh:null},{date:"2026-08-14",opp:"Blue Jays",home:false,t:"7:15 PM",dh:null},{date:"2026-08-15",opp:"Blue Jays",home:false,t:"3:07 PM",dh:null},{date:"2026-08-16",opp:"Blue Jays",home:false,t:"1:37 PM",dh:null},{date:"2026-08-18",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-19",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-20",opp:"Orioles",home:false,t:"6:35 PM",dh:null},{date:"2026-08-21",opp:"Blue Jays",home:true,t:"7:05 PM",dh:null},{date:"2026-08-22",opp:"Blue Jays",home:true,t:"1:35 PM",dh:null},{date:"2026-08-23",opp:"Blue Jays",home:true,t:"1:35 PM",dh:null},{date:"2026-08-25",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-26",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-27",opp:"Astros",home:true,t:"7:05 PM",dh:null},{date:"2026-08-28",opp:"Red Sox",home:true,t:"7:15 PM",dh:null},{date:"2026-08-29",opp:"Red Sox",home:true,t:"1:05 PM",dh:1},{date:"2026-08-29",opp:"Red Sox",home:true,t:"7:15 PM",dh:2},{date:"2026-08-30",opp:"Red Sox",home:true,t:"1:35 PM",dh:null},{date:"2026-08-31",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-01",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-02",opp:"Angels",home:false,t:"9:38 PM",dh:null},{date:"2026-09-04",opp:"Padres",home:false,t:"9:40 PM",dh:null},{date:"2026-09-05",opp:"Padres",home:false,t:"7:15 PM",dh:null},{date:"2026-09-06",opp:"Padres",home:false,t:"4:10 PM",dh:null},{date:"2026-09-08",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-09",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-10",opp:"Rockies",home:true,t:"7:05 PM",dh:null},{date:"2026-09-11",opp:"Mets",home:true,t:"7:05 PM",dh:null},{date:"2026-09-12",opp:"Mets",home:true,t:"1:35 PM",dh:null},{date:"2026-09-13",opp:"Mets",home:true,t:"1:35 PM",dh:null},{date:"2026-09-14",opp:"Twins",home:false,t:"7:40 PM",dh:null},{date:"2026-09-15",opp:"Twins",home:false,t:"7:40 PM",dh:null},{date:"2026-09-16",opp:"Twins",home:false,t:"1:40 PM",dh:null},{date:"2026-09-18",opp:"D-backs",home:false,t:"9:40 PM",dh:null},{date:"2026-09-19",opp:"D-backs",home:false,t:"8:10 PM",dh:null},{date:"2026-09-20",opp:"D-backs",home:false,t:"4:10 PM",dh:null},{date:"2026-09-22",opp:"Rays",home:true,t:"1:05 PM",dh:1},{date:"2026-09-22",opp:"Rays",home:true,t:"7:05 PM",dh:2},{date:"2026-09-23",opp:"Rays",home:true,t:"7:05 PM",dh:null},{date:"2026-09-24",opp:"Rays",home:true,t:"7:05 PM",dh:null},{date:"2026-09-25",opp:"Orioles",home:true,t:"7:05 PM",dh:null},{date:"2026-09-26",opp:"Orioles",home:true,t:"7:15 PM",dh:null},{date:"2026-09-27",opp:"Orioles",home:true,t:"3:20 PM",dh:null}];
+
+const TY=[{"id": "gC6uhMRD2Ns", "ep": 1394, "date": "2026-08-04", "title": "Aaron Boone Wasn't Surprised by the Yankees Trade Deadline"}, {"id": "xy6k-_v7Ml0", "ep": 1390, "date": "2026-07-28", "title": "Our Trade Deadline Plans"}, {"id": "-_-fwpPWUkQ", "ep": 1387, "date": "2026-07-21", "title": "What Does Aaron Boone Want at the Trade Deadline?"}, {"id": "JgmeOdeXPWo", "ep": 1385, "date": "2026-07-17", "title": "Jazz Chisholm Had to Step Up With Aaron Judge Out"}, {"id": "uHzKj1N58mU", "ep": 1382, "date": "2026-07-07", "title": "Yankees Trade Deadline Preview"}, {"id": "ynAgcS_UIcQ", "ep": 1379, "date": "2026-06-30", "title": "Aaron Boone Says the Yankees Will Break Out of This"}, {"id": "ZE22-h-WMb0", "ep": 1376, "date": "2026-06-23", "title": "Our Most Intense Boone Conversation This Season"}, {"id": "ErZbPe-6wS4", "ep": 1373, "date": "2026-06-16", "title": "Aaron Boone Says the Yankees Will Stay Aggressive With Their ABS Challenges"}, {"id": "DZyqsQnCDNI", "ep": 1370, "date": "2026-06-09", "title": "Aaron Boone Explains the Yankees Injury Timelines"}, {"id": "9R1yNmIjn78", "ep": 1367, "date": "2026-06-02", "title": "Can the Yankees Avoid the June Swoon?"}, {"id": "cvyLN7glVEw", "ep": 1365, "date": "2026-05-28", "title": "Yankees SWEEP the Royals in Dominant Fashion"}, {"id": "ptr9iA8S2Gk", "ep": 1364, "date": "2026-05-26", "title": "Aaron Boone Explains Flipping Judge & Rice in the Lineup"}, {"id": "A8HnaYjtllk", "ep": 1362, "date": "2026-05-22", "title": "The Worst Way to Split a Series"}, {"id": "GPBuzTV_C9M", "ep": 1361, "date": "2026-05-20", "title": "Evan Roberts Talks About the Best and Worst Yankee Takes of 2026"}, {"id": "qDK7xLhi9QQ", "ep": 1360, "date": "2026-05-19", "title": "Aaron Boone Would Let Jazz Wear His Pants Too"}, {"id": "qnNOGgiLLos", "ep": 1357, "date": "2026-05-12", "title": "Aaron Boone Discusses the Slumping Yankees"}, {"id": "tbGJBft8Eoc", "ep": 1354, "date": "2026-05-06", "title": "When Will We Actually See George Lombard Jr.?"}, {"id": "ylLJztPwxRs", "ep": 1351, "date": "2026-04-28", "title": "Aaron Boone Doesn't Want Jazz to Completely Stop Challenging"}, {"id": "WIRBFaAyzwI", "ep": 1348, "date": "2026-04-21", "title": "Biggest Takeaways of the Yankees Season So Far (with Jared Carrabis and Garrett Crochet)"}, {"id": "Ud-vdbB13BQ", "ep": 1345, "date": "2026-04-14", "title": "Aaron Boone Says Ben Rice is Very Valuable Off the Bench"}, {"id": "t3ybpHsTkTI", "ep": 1342, "date": "2026-04-07", "title": "Aaron Boone Breaks Down the Issues at the Bottom of the Order"}, {"id": "sHJ18qkQRTc", "ep": 1339, "date": "2026-03-31", "title": "Aaron Boone is Getting Used to ABS"}, {"id": "a0x1fq9FeUs", "ep": 1337, "date": "2026-03-25", "title": "YANKEES OPENING DAY"}, {"id": "QEQVWJo6ITs", "ep": 1336, "date": "2026-03-24", "title": "Yankees Making Their Final Roster Decisions!"}, {"id": "FeLMWgKwX3E", "ep": 1335, "date": "2026-03-22", "title": "Will the Yankees Outfield Be Best in MLB AGAIN?"}];
 
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;")}
 
@@ -414,11 +435,7 @@ monthnav.addEventListener("click",e=>{
   if(b)goTo(Number(b.dataset.go));
 });
 
-season.addEventListener("click",e=>{
-  const pg=e.target.closest(".pgbtn[data-go]");
-  if(pg&&!pg.disabled){goTo(Number(pg.dataset.go));return}
-  const btn=e.target.closest(".thumb");
-  if(!btn)return;
+function playThumb(btn){
   const f=document.createElement("iframe");
   f.src=`https://www.youtube-nocookie.com/embed/${btn.dataset.id}?autoplay=1&rel=0`;
   f.title=btn.getAttribute("aria-label");
@@ -427,6 +444,13 @@ season.addEventListener("click",e=>{
   const card=btn.closest(".game");
   btn.replaceWith(f);
   if(card){card.classList.add("playing");card.scrollIntoView({behavior:"smooth",block:"start"})}
+}
+
+season.addEventListener("click",e=>{
+  const pg=e.target.closest(".pgbtn[data-go]");
+  if(pg&&!pg.disabled){goTo(Number(pg.dataset.go));return}
+  const btn=e.target.closest(".thumb");
+  if(btn)playThumb(btn);
 });
 
 document.getElementById("sortbtn").addEventListener("click",e=>{
@@ -442,6 +466,40 @@ document.getElementById("scorebtn").addEventListener("click",e=>{
   e.currentTarget.textContent=off?"Show scores":"Hide scores";
   e.currentTarget.setAttribute("aria-pressed",off);
 });
+
+(function talkin(){
+  let showAll=false;
+  const grid=document.getElementById("tygrid");
+  function epCard(e){
+    const [y,m,d]=e.date.split("-").map(Number);
+    const dow=DOW[new Date(y,m-1,d).getDay()];
+    return `<article class="game ep">
+      <button class="thumb" data-id="${e.id}" aria-label="Play Talkin' Yanks episode ${e.ep}, ${MONTHS[m]} ${d}">
+        <img src="https://i.ytimg.com/vi/${e.id}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+        <span class="play"><svg viewBox="0 0 68 48" aria-hidden="true"><path d="M66.5 7.7c-.8-2.9-3-5.2-5.9-6C55.4.4 34 .4 34 .4S12.6.4 7.4 1.7c-2.9.8-5.1 3.1-5.9 6C.2 13 .2 24 .2 24s0 11 1.3 16.3c.8 2.9 3 5.2 5.9 6C12.6 47.6 34 47.6 34 47.6s21.4 0 26.6-1.3c2.9-.8 5.1-3.1 5.9-6C67.8 35 67.8 24 67.8 24s0-11-1.3-16.3z" fill="#fff"/><path d="M45 24 27 14v20z" fill="#0C2340"/></svg></span>
+      </button>
+      <div class="meta">
+        <div class="datebox"><div class="dow">${dow}</div><div class="day">${d}</div><div class="mon">${MABBR[m]}</div></div>
+        <div class="matchup">
+          <div class="eptitle">${esc(e.title)}</div>
+          <div class="epmask">Title hidden — could spoil results</div>
+          <div class="loc">Episode ${e.ep} · Talkin&rsquo; Yanks</div>
+        </div>
+        <a class="ytlink" href="https://youtu.be/${e.id}" target="_blank" rel="noopener" aria-label="Open on YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+        </a>
+      </div>
+    </article>`;
+  }
+  function renderTY(){
+    grid.innerHTML=(showAll?TY:TY.slice(0,6)).map(epCard).join("");
+    document.getElementById("ty-count").textContent=`${TY.length} episodes`;
+    document.getElementById("tymore").textContent=showAll?"Show fewer":`Show all ${TY.length} episodes`;
+  }
+  document.getElementById("tymore").addEventListener("click",()=>{showAll=!showAll;renderTY()});
+  grid.addEventListener("click",e=>{const btn=e.target.closest(".thumb");if(btn)playThumb(btn)});
+  renderTY();
+})();
 
 (function tables(){
   document.getElementById("standtbl").innerHTML=
